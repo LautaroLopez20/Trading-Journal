@@ -1,0 +1,15 @@
+com\mycompany\tradingjournal\GUI\Main.class
+com\mycompany\tradingjournal\GUI\Record$2.class
+com\mycompany\tradingjournal\Persistence\JPAUtil.class
+com\mycompany\tradingjournal\Logic\Controller.class
+com\mycompany\tradingjournal\GUI\NewOperation.class
+com\mycompany\tradingjournal\Logic\Operation.class
+com\mycompany\tradingjournal\Persistance\exceptions\PreexistingEntityException.class
+com\mycompany\tradingjournal\Persistance\exceptions\NonexistentEntityException.class
+com\mycompany\tradingjournal\Persistence\PersistenceController.class
+com\mycompany\tradingjournal\GUI\Record$1.class
+com\mycompany\tradingjournal\TradingJournal.class
+com\mycompany\tradingjournal\GUI\Record.class
+com\mycompany\tradingjournal\Logic\Account.class
+com\mycompany\tradingjournal\Persistance\exceptions\IllegalOrphanException.class
+com\mycompany\tradingjournal\Persistence\OperationRepository.class

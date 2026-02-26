@@ -1,0 +1,13 @@
+D:\Programacion\Proyectos\TradingJournal\src\main\java\com\mycompany\tradingjournal\GUI\Main.java
+D:\Programacion\Proyectos\TradingJournal\src\main\java\com\mycompany\tradingjournal\GUI\NewOperation.java
+D:\Programacion\Proyectos\TradingJournal\src\main\java\com\mycompany\tradingjournal\GUI\Record.java
+D:\Programacion\Proyectos\TradingJournal\src\main\java\com\mycompany\tradingjournal\Logic\Account.java
+D:\Programacion\Proyectos\TradingJournal\src\main\java\com\mycompany\tradingjournal\Logic\Controller.java
+D:\Programacion\Proyectos\TradingJournal\src\main\java\com\mycompany\tradingjournal\Logic\Operation.java
+D:\Programacion\Proyectos\TradingJournal\src\main\java\com\mycompany\tradingjournal\Persistance\exceptions\IllegalOrphanException.java
+D:\Programacion\Proyectos\TradingJournal\src\main\java\com\mycompany\tradingjournal\Persistance\exceptions\NonexistentEntityException.java
+D:\Programacion\Proyectos\TradingJournal\src\main\java\com\mycompany\tradingjournal\Persistance\exceptions\PreexistingEntityException.java
+D:\Programacion\Proyectos\TradingJournal\src\main\java\com\mycompany\tradingjournal\Persistence\JPAUtil.java
+D:\Programacion\Proyectos\TradingJournal\src\main\java\com\mycompany\tradingjournal\Persistence\OperationRepository.java
+D:\Programacion\Proyectos\TradingJournal\src\main\java\com\mycompany\tradingjournal\Persistence\PersistenceController.java
+D:\Programacion\Proyectos\TradingJournal\src\main\java\com\mycompany\tradingjournal\TradingJournal.java
