@@ -27,6 +27,8 @@ public class Record extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblRecord = new javax.swing.JTable();
         btnDelete = new javax.swing.JButton();
+        btnEdit = new javax.swing.JButton();
+        btnExit = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -55,6 +57,14 @@ public class Record extends javax.swing.JFrame {
         btnDelete.setText("Borrar");
         btnDelete.addActionListener(this::btnDeleteActionPerformed);
 
+        btnEdit.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        btnEdit.setText("Editar");
+        btnEdit.addActionListener(this::btnEditActionPerformed);
+
+        btnExit.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        btnExit.setText("Salir");
+        btnExit.addActionListener(this::btnExitActionPerformed);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -69,7 +79,11 @@ public class Record extends javax.swing.JFrame {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 945, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(243, 243, 243)
-                        .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(91, 91, 91)
+                        .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(85, 85, 85)
+                        .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(25, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -80,7 +94,10 @@ public class Record extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btnDelete, javax.swing.GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnDelete, javax.swing.GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE)
+                    .addComponent(btnEdit, javax.swing.GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE)
+                    .addComponent(btnExit, javax.swing.GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE))
                 .addGap(38, 38, 38))
         );
 
@@ -118,9 +135,34 @@ public class Record extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnDeleteActionPerformed
 
+    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
+        if(tblRecord.getRowCount() > 0) {
+            if(tblRecord.getSelectedRow() != -1) {
+                int numOp = Integer.parseInt(String.valueOf(tblRecord.getValueAt(tblRecord.getSelectedRow(),0)));
+                EditOperation screen = new EditOperation(numOp);
+                screen.setVisible(true);
+                screen.setLocationRelativeTo(null);
+                this.dispose();
+            } else {
+                ShowMessage("Ninguna Operacion Seleccionada","error","Error De Seleccion");
+            }
+        } else {
+            ShowMessage("La Tabla Esta Vacia","error","Error Tabla Vacia");
+        }
+    }//GEN-LAST:event_btnEditActionPerformed
+
+    private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
+        Main screen = new Main();
+        screen.setVisible(true);
+        screen.setLocationRelativeTo(null);
+        this.dispose();
+    }//GEN-LAST:event_btnExitActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnEdit;
+    private javax.swing.JButton btnExit;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;

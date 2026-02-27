@@ -2,19 +2,25 @@
 package com.mycompany.tradingjournal.GUI;
 
 import com.mycompany.tradingjournal.Logic.Controller;
+import com.mycompany.tradingjournal.Logic.Operation;
 import static java.lang.Integer.parseInt;
 import java.util.Date;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
-public class NewOperation extends javax.swing.JFrame {
+public class EditOperation extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(NewOperation.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(EditOperation.class.getName());
     private Controller controller = null;
+    private int numOp;
+    private Operation op;
     
-    public NewOperation() {
+    public EditOperation(int numOp) {
         controller = new Controller();
+        this.numOp = numOp;
         initComponents();
+        ShowValues();
     }
 
     @SuppressWarnings("unchecked")
@@ -55,13 +61,18 @@ public class NewOperation extends javax.swing.JFrame {
         jSpinnerDate = new javax.swing.JSpinner();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jPanel3.setBackground(new java.awt.Color(102, 255, 255));
         jPanel3.setForeground(new java.awt.Color(51, 255, 255));
 
         jLabel1.setBackground(new java.awt.Color(0, 0, 0));
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
-        jLabel1.setText("Nueva Operacion");
+        jLabel1.setText("Editar Operacion");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -343,15 +354,9 @@ public class NewOperation extends javax.swing.JFrame {
         String trend = (String)cmbTrend.getSelectedItem();
         String type = (String)cmbType.getSelectedItem();
 
-        controller.save(date,stopLoss,takeProfit,result,priceOut,priceIn,percentajeRisk,annotation,active,market,trend,type);
-
-        JOptionPane optionPane = new JOptionPane("Operacion aregada");
-        optionPane.setMessageType(JOptionPane.INFORMATION_MESSAGE);
-        JDialog dialog = optionPane.createDialog("Guardado Exitoso");
-        dialog.setAlwaysOnTop(true);
-        dialog.setVisible(true);
-
-        Main screen = new Main();
+        controller.update(this.op,date,stopLoss,takeProfit,result,priceOut,priceIn,percentajeRisk,annotation,active,market,trend,type);
+        ShowMessage("Operacion Actualizada","info","Modifiacion Exitosa");
+        Record screen = new Record();
         screen.setVisible(true);
         screen.setLocationRelativeTo(null);
         this.dispose();
@@ -395,6 +400,41 @@ public class NewOperation extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtPriceInActionPerformed
 
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        
+    }//GEN-LAST:event_formWindowOpened
+
+    private void ShowValues() {
+        this.op = controller.getOperation(numOp);
+        if(op != null) {
+            jSpinnerDate.setValue(op.getDate());
+            txtStopLoss.setText(String.valueOf(op.getStopLoss()));
+            txtTakeProfit.setText(String.valueOf(op.getTakeProfit()));
+            txtResult.setText(String.valueOf(op.getResultOp()));
+            txtPriceOut.setText(String.valueOf(op.getPriceOut()));
+            txtPriceIn.setText(String.valueOf(op.getPriceIn()));
+            txtPercentajeRisk.setText(String.valueOf(op.getPercentajeRisk()));
+            txtAreaAnnotation.setText(String.valueOf(op.getAnnotations()));
+            cmbActive.setSelectedItem(op.getActive());
+            cmbMarket.setSelectedItem(op.getMarket());
+            cmbTrend.setSelectedItem(op.getTrend());
+            cmbType.setSelectedItem(op.getType());
+        } else {
+            ShowMessage("Operacion No Encontrada","error","Error Operacion");
+            this.dispose();
+        }
+    }
+    private void ShowMessage(String message, String type, String title) {
+        JOptionPane optionPane = new JOptionPane(title);
+        if(type.equals("info")) {
+            optionPane.setMessageType(JOptionPane.INFORMATION_MESSAGE);
+        } else if(type.equals("error")) {
+            optionPane.setMessageType(JOptionPane.ERROR_MESSAGE);
+        }
+        JDialog dialog = optionPane.createDialog(message);
+        dialog.setAlwaysOnTop(true);
+        dialog.setVisible(true);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnClean;

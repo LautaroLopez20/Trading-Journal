@@ -31,6 +31,15 @@ public class OperationRepository {
         }
     }
     
+    public Operation findById(int id) {
+    EntityManager em = JPAUtil.getEntityManagerFactory().createEntityManager();
+    try {
+        return em.find(Operation.class, id);
+    } finally {
+        em.close();
+    }
+}
+    
     public void delete(int id) {
         EntityManager em = JPAUtil.getEntityManagerFactory().createEntityManager();
         try {
@@ -44,4 +53,18 @@ public class OperationRepository {
             em.close();
         }
     }
+    
+    public void update(Operation operation) {
+    EntityManager em = JPAUtil.getEntityManagerFactory().createEntityManager();
+    try {
+        em.getTransaction().begin();
+        em.merge(operation);
+        em.getTransaction().commit();
+    } catch (Exception e) {
+        em.getTransaction().rollback();
+        throw e;
+    } finally {
+        em.close();
+    }
+}
 }

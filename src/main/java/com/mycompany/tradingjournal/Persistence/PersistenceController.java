@@ -22,4 +22,12 @@ public class PersistenceController {
     public void delete(int id) {
         opRepo.delete(id);
     }
+    
+    public Operation getOperation(int numOp) {
+        return opRepo.findById(numOp);
+    }
+    
+    public void update(Operation op) {
+        opRepo.update(op);
+    }
 }

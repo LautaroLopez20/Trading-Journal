@@ -120,7 +120,7 @@ public class Operation {
         this.annotations = annotations;
     }
 
-    public double getStopLoss() {
+    public int getStopLoss() {
         return stopLoss;
     }
 
@@ -128,7 +128,7 @@ public class Operation {
         this.stopLoss = stopLoss;
     }
 
-    public double getTakeProfit() {
+    public int getTakeProfit() {
         return takeProfit;
     }
 
@@ -136,7 +136,7 @@ public class Operation {
         this.takeProfit = takePofit;
     }
 
-    public double getResultOp() {
+    public int getResultOp() {
         return resultOp;
     }
 
