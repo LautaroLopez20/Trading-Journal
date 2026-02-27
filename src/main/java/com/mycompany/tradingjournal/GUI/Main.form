@@ -121,16 +121,15 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="btnNewOperation" pref="148" max="32767" attributes="0"/>
-                          <Component id="btnEditOperation" max="32767" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="92" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="btnRecord" min="-2" pref="132" max="-2" attributes="0"/>
-                          <Component id="btnMetrics" min="-2" pref="132" max="-2" attributes="0"/>
-                      </Group>
+                      <Component id="btnNewOperation" min="-2" pref="148" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="77" max="-2" attributes="0"/>
+                      <Component id="btnRecord" min="-2" pref="147" max="-2" attributes="0"/>
                       <EmptySpace min="158" max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="btnMetrics" min="-2" pref="132" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="130" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -142,12 +141,9 @@
                           <Component id="btnNewOperation" alignment="3" min="-2" pref="55" max="-2" attributes="0"/>
                           <Component id="btnRecord" alignment="3" min="-2" pref="55" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="btnMetrics" min="-2" pref="55" max="-2" attributes="0"/>
-                          <Component id="btnEditOperation" alignment="0" min="-2" pref="55" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace pref="23" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+                      <Component id="btnMetrics" min="-2" pref="55" max="-2" attributes="0"/>
+                      <EmptySpace pref="26" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -175,14 +171,6 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnMetricsActionPerformed"/>
-              </Events>
-            </Component>
-            <Component class="javax.swing.JButton" name="btnEditOperation">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="EDITAR OPERACION"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEditOperationActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>

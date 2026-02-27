@@ -13,7 +13,7 @@ public class Operation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private int id;
     
     @Temporal(TemporalType.DATE)
     private Date date;
@@ -72,7 +72,7 @@ public class Operation {
         this.priceOut = priceOut;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 

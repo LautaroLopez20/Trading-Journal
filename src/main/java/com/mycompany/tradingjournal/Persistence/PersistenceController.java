@@ -18,4 +18,8 @@ public class PersistenceController {
     public List<Operation> getAll() {
         return opRepo.findAll();
     }
+    
+    public void delete(int id) {
+        opRepo.delete(id);
+    }
 }

@@ -31,7 +31,7 @@ public class OperationRepository {
         }
     }
     
-    public void delete(long id) {
+    public void delete(int id) {
         EntityManager em = JPAUtil.getEntityManagerFactory().createEntityManager();
         try {
             em.getTransaction().begin();

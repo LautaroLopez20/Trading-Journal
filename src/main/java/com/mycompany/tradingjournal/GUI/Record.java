@@ -4,6 +4,8 @@ package com.mycompany.tradingjournal.GUI;
 import com.mycompany.tradingjournal.Logic.Controller;
 import com.mycompany.tradingjournal.Logic.Operation;
 import java.util.List;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class Record extends javax.swing.JFrame {
@@ -51,6 +53,7 @@ public class Record extends javax.swing.JFrame {
 
         btnDelete.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         btnDelete.setText("Borrar");
+        btnDelete.addActionListener(this::btnDeleteActionPerformed);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -99,6 +102,22 @@ public class Record extends javax.swing.JFrame {
         TableLoad();
     }//GEN-LAST:event_formWindowOpened
 
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        
+        if(tblRecord.getRowCount() > 0) {
+            if(tblRecord.getSelectedRow() != -1) {
+                int numOp = Integer.parseInt(String.valueOf(tblRecord.getValueAt(tblRecord.getSelectedRow(), 0)));
+                controller.delete(numOp);
+                ShowMessage("Operacion Eliminada","info","Eliminacion Exitosa");
+                TableLoad();
+            } else {
+                ShowMessage("Ninguna Operacion Seleccionada","error","Error De Seleccion");
+            }
+        } else {
+            ShowMessage("La Tabla Esta Vacia","error","Error Tabla Vacia");
+        }
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDelete;
@@ -130,5 +149,17 @@ public class Record extends javax.swing.JFrame {
         }
         
         tblRecord.setModel(table);
+    }
+    
+    private void ShowMessage(String message, String type, String title) {
+        JOptionPane optionPane = new JOptionPane(title);
+        if(type.equals("info")) {
+            optionPane.setMessageType(JOptionPane.INFORMATION_MESSAGE);
+        } else if(type.equals("error")) {
+            optionPane.setMessageType(JOptionPane.ERROR_MESSAGE);
+        }
+        JDialog dialog = optionPane.createDialog(message);
+        dialog.setAlwaysOnTop(true);
+        dialog.setVisible(true);
     }
 }

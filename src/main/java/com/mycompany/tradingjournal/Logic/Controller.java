@@ -6,10 +6,10 @@ import java.util.Date;
 import java.util.List;
 
 public class Controller {
-    private PersistenceController persistanceController = null;
+    private PersistenceController persistenceController = null;
     
     public Controller() {
-        persistanceController = new PersistenceController();
+        persistenceController = new PersistenceController();
     }
     
     public void save(Date date,int stopLoss, int takeProfit, int result, int priceIn,
@@ -29,10 +29,14 @@ public class Controller {
         op.setTrend(trend);
         op.setType(type);
         
-        persistanceController.save(op);
+        persistenceController.save(op);
     }
     
     public List<Operation> getAll() {
-        return persistanceController.getAll();
+        return persistenceController.getAll();
+    }
+    
+    public void delete(int id) {
+        persistenceController.delete(id);
     }
 }
