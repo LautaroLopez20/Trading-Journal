@@ -2,24 +2,26 @@
 package com.mycompany.tradingjournal.Logic;
 
 import com.mycompany.tradingjournal.Persistence.PersistenceController;
-import java.util.Date;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 
-public class Controller {
+public class Controller{
     private PersistenceController persistenceController = null;
     
     public Controller() {
         persistenceController = new PersistenceController();
     }
     
-    public void save(Date date,int stopLoss, int takeProfit, int result, int priceIn,
-                    int priceOut, int percentajeRisk, String annotation, String active, String market,
+    public void save(LocalDate date,double stopLoss, double takeProfit, double priceOut,
+                    double priceIn, double percentajeRisk, String annotation, String active, String market,
                     String trend, String type) {
         Operation op = new Operation();
         op.setDate(date);
         op.setStopLoss(stopLoss);
         op.setTakeProfit(takeProfit);
-        op.setResultOp(result);
+        op.setResultOp(priceOut - priceIn);
         op.setPriceIn(priceIn);
         op.setPriceOut(priceOut);
         op.setPercentajeRisk(percentajeRisk);
@@ -44,12 +46,12 @@ public class Controller {
         return persistenceController.getOperation(numOp);
     }
     
-    public void update(Operation op,Date date,int stopLoss,int takeProfit,int result,int priceOut,int priceIn,
-                           int percentajeRisk,String annotation,String active,String market,String trend,String type){
+    public void update(Operation op,LocalDate date,double stopLoss,double takeProfit,double priceOut,double priceIn,
+                           double percentajeRisk,String annotation,String active,String market,String trend,String type){
         op.setDate(date);
         op.setStopLoss(stopLoss);
         op.setTakeProfit(takeProfit);
-        op.setResultOp(result);
+        op.setResultOp(priceOut - priceIn);
         op.setPriceIn(priceIn);
         op.setPriceOut(priceOut);
         op.setAnnotations(annotation);
@@ -60,35 +62,129 @@ public class Controller {
         
         persistenceController.update(op);
     }
+
+    public double getTotalOps() {
+        double totalOps = persistenceController.getAll().size();
+        return totalOps;
+    }
     
-    public int getActualCapital() {
-        int actualCapital = 0;
+    public double getWonTrades() {
+        double wonTrades = 0;
         List<Operation> operations = persistenceController.getAll();
         for(Operation op : operations) {
-            actualCapital += op.getResultOp();
+            if(op.getResultOp() > 0) {
+                wonTrades++;
+            }
         }
-        return actualCapital;
+        return wonTrades;
+    }
+    
+    public double getLossTrades() {
+        double lossTrades = 0;
+        List<Operation> operations = persistenceController.getAll();
+        for(Operation op : operations) {
+            if(op.getResultOp() < 0) {
+                lossTrades++;
+            }
+        }
+        return lossTrades;
+    }
+    
+    public double getWinRate() {
+        double winRate = (getWonTrades() / getTotalOps()) * 100;
+        return winRate;
+    }
+    
+    public double getTotalProfit() {
+        double totalProfit = 0;
+        List<Operation> operations = persistenceController.getAll();
+        for(Operation op : operations) {
+            if(op.getResultOp() > 0) {
+                totalProfit += op.getResultOp();
+            }
+        }
+        return totalProfit;
+    }
+    
+    public double getTotalLoss() {
+        double totalProfit = 0;
+        List<Operation> operations = persistenceController.getAll();
+        for(Operation op : operations) {
+            if(op.getResultOp() < 0) {
+                totalProfit += op.getResultOp();
+            }
+        }
+        return totalProfit;
+    }
+    
+    public double getProfitFactor() {
+        double profitFactor = (getTotalProfit() / getTotalLoss());
+        return profitFactor;
+    }
+    
+    public double getMonthlyResult() {
+        double monthlyResult = 0;
+        int month = LocalDate.now().getMonthValue();
+        List<Operation> operations = persistenceController.getAll();
+        Collections.sort(operations);
+        for(Operation op : operations) {
+            if(op.getDate().getMonthValue() == month) {
+                monthlyResult += op.getResultOp();
+            }
+        }
+        return monthlyResult;
+    }
+    
+    public double getWeeklyResult() {
+        double weeklyResult = 0;
+        List<Operation> operations = persistenceController.getAll();
+        if(!operations.isEmpty()) {
+            Collections.sort(operations,Collections.reverseOrder());
+            LocalDate mostRecentOp = operations.get(0).getDate();
+            LocalDate weekStart = null;
+            int opDay = mostRecentOp.getDayOfWeek().getValue() - 1;
+            
+            //The week start on Monday
+            if(opDay != 0) {
+                weekStart = mostRecentOp.minusDays(opDay);
+            } else {
+                weekStart = mostRecentOp;
+            }
+            
+            for(Operation op : operations) {
+                if((op.getDate().isAfter(weekStart)) || (op.getDate().isEqual(weekStart))) {
+                    weeklyResult += op.getResultOp();
+                }
+            }
+        }
+        return weeklyResult;
     }
     
     public Operation getBestOp() {
         List<Operation> operations = persistenceController.getAll();
-        Operation bestOp = operations.get(0);
-        for(Operation op : operations) {
-            if(bestOp.getResultOp() < op.getResultOp()) {
-                bestOp = op;
+        if(!operations.isEmpty()) {
+            Operation bestOp = operations.get(0);
+            for(Operation op : operations) {
+                if(bestOp.getResultOp() < op.getResultOp()) {
+                    bestOp = op;
+                }
             }
+            return bestOp;
         }
-        return bestOp;
+        return null;
     }
     
     public Operation getWorstOp() {
         List<Operation> operations = persistenceController.getAll();
-        Operation worstOp = operations.get(0);
-        for(Operation op : operations) {
-            if(worstOp.getResultOp() > op.getResultOp()) {
-                worstOp = op;
+        if(!operations.isEmpty()) {
+            Operation worstOp = operations.get(0);
+            for(Operation op : operations) {
+                if(worstOp.getResultOp() > op.getResultOp()) {
+                    worstOp = op;
+                }
             }
+            return worstOp;
         }
-        return worstOp;
+        return null;
     }
 }

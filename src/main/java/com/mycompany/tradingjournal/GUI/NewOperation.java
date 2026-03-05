@@ -2,7 +2,8 @@
 package com.mycompany.tradingjournal.GUI;
 
 import com.mycompany.tradingjournal.Logic.Controller;
-import static java.lang.Integer.parseInt;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
@@ -45,8 +46,6 @@ public class NewOperation extends javax.swing.JFrame {
         txtTakeProfit = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         txtPercentajeRisk = new javax.swing.JTextField();
-        jLabel12 = new javax.swing.JLabel();
-        txtResult = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtAreaAnnotation = new javax.swing.JTextArea();
@@ -132,11 +131,6 @@ public class NewOperation extends javax.swing.JFrame {
 
         txtPercentajeRisk.addActionListener(this::txtPercentajeRiskActionPerformed);
 
-        jLabel12.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel12.setText("Resultado:");
-
-        txtResult.addActionListener(this::txtResultActionPerformed);
-
         jLabel13.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel13.setText("Anotaciones:");
 
@@ -188,15 +182,9 @@ public class NewOperation extends javax.swing.JFrame {
                                 .addComponent(txtPriceOut, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 43, Short.MAX_VALUE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(jLabel10)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txtTakeProfit))
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(jLabel12)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txtResult)))
+                                .addComponent(jLabel10)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtTakeProfit)
                                 .addContainerGap())))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -266,14 +254,12 @@ public class NewOperation extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
-                    .addComponent(txtPercentajeRisk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel12)
-                    .addComponent(txtResult, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(txtPercentajeRisk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(27, 27, 27)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel13)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel13))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnClean)
                     .addComponent(btnSave))
@@ -330,20 +316,20 @@ public class NewOperation extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        Date date = (Date)jSpinnerDate.getValue();
-        int stopLoss = parseInt(txtStopLoss.getText());
-        int takeProfit = parseInt(txtTakeProfit.getText());
-        int result = parseInt(txtResult.getText());
-        int priceOut = parseInt(txtPriceOut.getText());
-        int priceIn = parseInt(txtPriceIn.getText());
-        int percentajeRisk = parseInt(txtPercentajeRisk.getText());
+        Date temporalDate = (Date)jSpinnerDate.getValue();
+        LocalDate date = temporalDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        double stopLoss = Double.parseDouble(txtStopLoss.getText());
+        double takeProfit = Double.parseDouble(txtTakeProfit.getText());
+        double priceOut = Double.parseDouble(txtPriceOut.getText());
+        double priceIn = Double.parseDouble(txtPriceIn.getText());
+        double percentajeRisk = Double.parseDouble(txtPercentajeRisk.getText());
         String annotation = txtAreaAnnotation.getText();
         String active = (String)cmbActive.getSelectedItem();
         String market = (String)cmbMarket.getSelectedItem();
         String trend = (String)cmbTrend.getSelectedItem();
         String type = (String)cmbType.getSelectedItem();
 
-        controller.save(date,stopLoss,takeProfit,result,priceOut,priceIn,percentajeRisk,annotation,active,market,trend,type);
+        controller.save(date,stopLoss,takeProfit,priceOut,priceIn,percentajeRisk,annotation,active,market,trend,type);
 
         JOptionPane optionPane = new JOptionPane("Operacion aregada");
         optionPane.setMessageType(JOptionPane.INFORMATION_MESSAGE);
@@ -360,7 +346,6 @@ public class NewOperation extends javax.swing.JFrame {
     private void btnCleanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCleanActionPerformed
         txtStopLoss.setText("");
         txtTakeProfit.setText("");
-        txtResult.setText("");
         txtPriceIn.setText("");
         txtPriceOut.setText("");
         txtPercentajeRisk.setText("");
@@ -370,10 +355,6 @@ public class NewOperation extends javax.swing.JFrame {
         cmbTrend.setSelectedIndex(0);
         cmbType.setSelectedIndex(0);
     }//GEN-LAST:event_btnCleanActionPerformed
-
-    private void txtResultActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtResultActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtResultActionPerformed
 
     private void txtPercentajeRiskActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPercentajeRiskActionPerformed
         // TODO add your handling code here:
@@ -406,7 +387,6 @@ public class NewOperation extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -426,7 +406,6 @@ public class NewOperation extends javax.swing.JFrame {
     private javax.swing.JTextField txtPercentajeRisk;
     private javax.swing.JTextField txtPriceIn;
     private javax.swing.JTextField txtPriceOut;
-    private javax.swing.JTextField txtResult;
     private javax.swing.JTextField txtStopLoss;
     private javax.swing.JTextField txtTakeProfit;
     // End of variables declaration//GEN-END:variables

@@ -1,6 +1,6 @@
 package com.mycompany.tradingjournal.Logic;
 
-import java.util.Date;
+import java.time.LocalDate;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,32 +9,30 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-public class Operation {
+public class Operation implements Comparable<Operation>{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     
-    @Temporal(TemporalType.DATE)
-    private Date date;
-    
+    private LocalDate date;
     private String active;
     private String type;
     private String market;
     private String trend;
     private String annotations;
-    private int priceIn;
-    private int priceOut;
-    private int stopLoss;
-    private int takeProfit;
-    private int resultOp;
-    private int percentajeRisk;
+    private double priceIn;
+    private double priceOut;
+    private double stopLoss;
+    private double takeProfit;
+    private double resultOp;
+    private double percentajeRisk;
 
     public Operation(){
     }
     
     public Operation(String active, String type, String market, String trend,
-            String annotations, int stopLoss, int takeProfit, int resultOp, int percentajeRisk, int priceIn, int priceOut) {
+            String annotations, double stopLoss, double takeProfit, double resultOp, double percentajeRisk, double priceIn, double priceOut) {
         this.active = active;
         this.type = type;
         this.market = market;
@@ -48,27 +46,27 @@ public class Operation {
         this.priceOut = priceOut;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
-    public int getPriceIn() {
+    public double getPriceIn() {
         return priceIn;
     }
 
-    public void setPriceIn(int priceIn) {
+    public void setPriceIn(double priceIn) {
         this.priceIn = priceIn;
     }
 
-    public int getPriceOut() {
+    public double getPriceOut() {
         return priceOut;
     }
 
-    public void setPriceOut(int priceOut) {
+    public void setPriceOut(double priceOut) {
         this.priceOut = priceOut;
     }
 
@@ -120,36 +118,40 @@ public class Operation {
         this.annotations = annotations;
     }
 
-    public int getStopLoss() {
+    public double getStopLoss() {
         return stopLoss;
     }
 
-    public void setStopLoss(int stopLoss) {
+    public void setStopLoss(double stopLoss) {
         this.stopLoss = stopLoss;
     }
 
-    public int getTakeProfit() {
+    public double getTakeProfit() {
         return takeProfit;
     }
 
-    public void setTakeProfit(int takePofit) {
+    public void setTakeProfit(double takePofit) {
         this.takeProfit = takePofit;
     }
 
-    public int getResultOp() {
+    public double getResultOp() {
         return resultOp;
     }
 
-    public void setResultOp(int resultOp) {
+    public void setResultOp(double resultOp) {
         this.resultOp = resultOp;
     }
 
-    public int getPercentajeRisk() {
+    public double getPercentajeRisk() {
         return percentajeRisk;
     }
 
-    public void setPercentajeRisk(int percentajeRisk) {
+    public void setPercentajeRisk(double percentajeRisk) {
         this.percentajeRisk = percentajeRisk;
     }
-
+    
+    @Override
+    public int compareTo(Operation o) {
+        return this.getDate().compareTo(o.getDate());
+    }
 }
