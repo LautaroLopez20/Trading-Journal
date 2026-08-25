@@ -1,12 +1,14 @@
+
 package com.mycompany.tradingjournal;
 
-import com.mycompany.tradingjournal.GUI.Main;
+import com.mycompany.tradingjournal.GUI.MainFrame;
+import com.mycompany.tradingjournal.GUI.ui.Theme;
+import javax.swing.SwingUtilities;
 
 public class TradingJournal {
 
     public static void main(String[] args) {
-        Main mainScreen = new Main();
-        mainScreen.setVisible(true);
-        mainScreen.setLocationRelativeTo(null);
+        Theme.init();
+        SwingUtilities.invokeLater(() -> new MainFrame().setVisible(true));
     }
 }
